@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -u
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT_DIR" || exit 1
+
+. "$ROOT_DIR/lib/ui.sh"
+. "$ROOT_DIR/lib/core.sh"
+for m in "$ROOT_DIR"/modules/*.sh; do . "$m"; done
+
+menu_main() {
+  printf '%s\n' "${GRY}──────────────────────────────────────────${R}"
+  printf '  %s\n' "${B}[1]${R} WiFi & Router     ${DIM}LAN sweep, router creds, WPS, .cap${R}"
+  printf '  %s\n' "${B}[2]${R} WhatsApp          ${DIM}ban checks, OTP flood, perm-ban playbook${R}"
+  printf '  %s\n' "${B}[3]${R} OSINT             ${DIM}username, email, phone, IP, domain${R}"
+  printf '  %s\n' "${B}[4]${R} Network / Recon   ${DIM}port scan, DNS, whois, headers, TLS${R}"
+  printf '  %s\n' "${B}[5]${R} Cracking          ${DIM}hashes, zip, wordlist gen${R}"
+  printf '  %s\n' "${B}[6]${R} Phishing & Shells ${DIM}clone page, revshells, IP logger${R}"
+  printf '  %s\n' "${B}[7]${R} Utilities         ${DIM}QR, shortener, pwgen, temp mail${R}"
+  printf '  %s\n' "${B}[8]${R} Deps / update${R}"
+  printf '  %s\n' "${B}[9]${R} Limits & about${R}"
+  printf '  %s\n' "${B}[0]${R} Exit"
+  printf '%s\n' "${GRY}──────────────────────────────────────────${R}"
+}
+
+main() {
+  clear 2>/dev/null; banner
+  while :; do
+    menu_main
+    printf '%s' "${BLU}ish>${R} "
+    read -r c
+    case "$c" in
+      1) m_wifi ;; 2) m_wa ;; 3) m_osint ;; 4) m_net ;;
+      5) m_crack ;; 6) m_phish ;; 7) m_tools ;;
+      8) "$ROOT_DIR/install.sh"; pause ;;
+      9) about; pause ;;
+      0|q) exit 0 ;;
+      *) warn "no such entry" ;;
+    esac
+    clear 2>/dev/null; banner
+  done
+}
+
+about() {
+  printf '%s\n' "${B}limits${R}"
+  printf '%s\n' "  no monitor mode · no deauth · no inbound ports · no ICMP"
+  printf '%s\n' "  no ARP/raw sockets · nmap -sT only · pure-python pip only"
+  printf '%s\n' "  jobs die in background — use tmux, keep the app open"
+  printf '%s\n' "${B}works${R}"
+  printf '%s\n' "  outbound TCP/DNS/HTTP · connect scans · dig/whois · offline cracking"
+}
+
+main "$@"
