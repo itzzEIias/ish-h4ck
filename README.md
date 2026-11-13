@@ -6,7 +6,7 @@ not copied from a Kali box.
 ## Install
 
     apk update
-    git clone <your-repo> ~/ish-h4ck
+    git clone https://github.com/itzzEIias/ish-h4ck ~/ish-h4ck
     cd ~/ish-h4ck && chmod +x ish install.sh
     ./install.sh
     ./ish
