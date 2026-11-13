@@ -6,7 +6,7 @@ not copied from a Kali box.
 ## Install
 
     apk update
-    apk update && apk add bash curl git nmap bind-tools whois python3 jq openssl aircrack-ng qrencode
+    apk add bash curl git nmap bind-tools whois python3 jq openssl aircrack-ng qrencode
     git clone https://github.com/itzzEIias/ish-h4ck ~/ish-h4ck
     cd ~/ish-h4ck && chmod +x ish install.sh
     ./install.sh
